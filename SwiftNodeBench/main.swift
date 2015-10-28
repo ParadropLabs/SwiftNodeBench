@@ -33,11 +33,10 @@ class Session: RiffleSession {
     }
     
     func recieveCollections(a: [Int]) {
-//        func recieveCollections(a: [Int], b: [Float], c: [Double], d: [String], e: [Bool]) {
-//        print("Receiving all kinds of stuff: ", a, b, c, d, e)
+        //func recieveCollections(a: [Int], b: [Float], c: [Double], d: [String], e: [Bool]) {
+        //print("Receiving all kinds of stuff: ", a, b, c, d, e)
         print("Receiving collection: ", a)
     }
-
     
     
     // MARK: Utils and Misc
