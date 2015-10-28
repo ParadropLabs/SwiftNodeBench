@@ -40,7 +40,7 @@ public class RiffleModel : MTLModel, MTLJSONSerializing, Cuminicable {
         return nil
     }
     
-    public static func brutalize(object: Cuminicable) -> Cuminicable? {
+    public static func brutalize<T: Cuminicable>(object: Cuminicable, _ t: T.Type) -> Cuminicable? {
         return nil
     }
     

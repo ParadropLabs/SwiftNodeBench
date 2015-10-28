@@ -40,29 +40,9 @@ func convert<A: AnyObject, T: Cuminicable>(a: A?, _ t: T.Type) -> T? {
         // Catch the OSX error as a last resort: on OSX the type pointers point to different things because of 
         // "embedded swift code..." and the library being imported twice
         // If we've gotten here the normal things aren't going to work 
-        if let bibble = t.brutalize(castResult) {
-            print("Hibblebibble")
-            return bibble as? T
+        if let bibble = t.brutalize(castResult, T.self) as? T{
+            return bibble
         }
-        
-        
-        
-        // Catch errors for OSX issues
-        print("Cast result: ", castResult)
-        print("Expected type: ", t.dynamicType)
-        print("Dynamic Type: ", castResult.dynamicType)
-        print("Dynamic types match: \(T.self)" == "\(castResult.dynamicType)")
-        
-//        print("Size of result type: ", sizeof(boo))
-        print("Size of expected type: ", sizeof(T.self))
-        
-        // Catch the OSX error-- the types have different pointers since the swift lib is imported twice
-        if "\(T.self)" == "\(castResult.dynamicType)" {
-            let gamma = unsafeBitCast(ret, t)
-            return gamma
-        }
-        
-//        return ret as! T
     }
     
     return nil
@@ -127,8 +107,6 @@ func <- <T: CN> (t:T.Type, object: AnyObject) -> T {
     
     // This would be an exxcellent place to catch cumin errors
     // Throwing is likely the easiest way to deal with them
-    
-    print(a)
     
     return a!
 }

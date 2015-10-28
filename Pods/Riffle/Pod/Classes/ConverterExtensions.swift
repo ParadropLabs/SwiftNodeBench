@@ -14,10 +14,19 @@ public protocol Cuminicable {
     
     // Assume the object passed in is of the same type as this object
     // Apply an unsafebitcast to the object to make it play nicely with the return types
-    static func brutalize(object: Cuminicable) -> Cuminicable?
+    static func brutalize<T: Cuminicable>(object: Cuminicable, _ t: T.Type) -> Cuminicable?
 }
 
 public typealias CN = Cuminicable
+
+// Attempting to make a catch all method for the brutal casts
+func _brutalize<A, T: Cuminicable>(object: Cuminicable, _ expected: A.Type, _ t: T.Type) -> Cuminicable? {
+    if let x = object as? A.Type {
+        return unsafeBitCast(x, T.self)
+    }
+    
+    return nil
+}
 
 extension Int: Cuminicable {
     public static func convert(object: AnyObject) -> Cuminicable? {
@@ -32,9 +41,9 @@ extension Int: Cuminicable {
         return nil
     }
     
-    public static func brutalize(object: Cuminicable) -> Cuminicable? {
+    public static func brutalize<T: Cuminicable>(object: Cuminicable, _ t: T.Type) -> Cuminicable? {
         if let x = object as? Int {
-            return unsafeBitCast(x, Int.self)
+            return unsafeBitCast(x, T.self)
         }
         
         return nil
@@ -43,10 +52,8 @@ extension Int: Cuminicable {
 
 extension String: Cuminicable {
     public static func convert(object: AnyObject) -> Cuminicable? {
-//        print("Dyanmic type of object as it comes into the receiver", object.dynamicType)
         
         if let x = object as? String {
-//            print("String converter, returning: ", x.dynamicType)
             return x
         }
         
@@ -57,7 +64,11 @@ extension String: Cuminicable {
         return nil
     }
     
-    public static func brutalize(object: Cuminicable) -> Cuminicable? {
+    public static func brutalize<T: Cuminicable>(object: Cuminicable, _ t: T.Type) -> Cuminicable? {
+        if let x = object as? String {
+            return unsafeBitCast(x, T.self)
+        }
+        
         return nil
     }
 }
@@ -75,7 +86,11 @@ extension Double: Cuminicable {
         return nil
     }
     
-    public static func brutalize(object: Cuminicable) -> Cuminicable? {
+    public static func brutalize<T: Cuminicable>(object: Cuminicable, _ t: T.Type) -> Cuminicable? {
+        if let x = object as? Double {
+            return unsafeBitCast(x, T.self)
+        }
+        
         return nil
     }
 }
@@ -93,7 +108,11 @@ extension Float: Cuminicable {
         return nil
     }
     
-    public static func brutalize(object: Cuminicable) -> Cuminicable? {
+    public static func brutalize<T: Cuminicable>(object: Cuminicable, _ t: T.Type) -> Cuminicable? {
+        if let x = object as? Float {
+            return unsafeBitCast(x, T.self)
+        }
+        
         return nil
     }
 }
@@ -111,7 +130,11 @@ extension Bool: Cuminicable {
         return nil
     }
     
-    public static func brutalize(object: Cuminicable) -> Cuminicable? {
+    public static func brutalize<T: Cuminicable>(object: Cuminicable, _ t: T.Type) -> Cuminicable? {
+        if let x = object as? Bool {
+            return unsafeBitCast(x, T.self)
+        }
+        
         return nil
     }
 }

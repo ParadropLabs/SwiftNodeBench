@@ -1,6 +1,8 @@
 // Straight Boilerplate-- make the compiler happy
 import Foundation
 
+typealias CL = CollectionType
+
 public extension RiffleSession {
 	public func register(pdid: String, _ fn: () -> ())  {
 	_register(pdid, fn: cumin(fn))
@@ -119,8 +121,8 @@ public extension RiffleSession {
 }
 
 	public func subscribe<A: CN, B: CN, C: CN, D: CN, E: CN>(pdid: String, _ fn: (A, B, C, D, E) -> ())  {
-	_subscribe(pdid, fn: cumin(fn))
-}
+        _subscribe(pdid, fn: cumin(fn))
+    }
 
 	public func call(pdid: String, _ args: AnyObject..., handler fn: (() -> ())?)  {
 	_call(pdid, args: args, fn: fn == nil ? nil: cumin(fn!))
