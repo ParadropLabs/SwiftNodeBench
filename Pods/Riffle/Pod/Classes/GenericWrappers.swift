@@ -1,7 +1,7 @@
 // Straight Boilerplate-- make the compiler happy
 import Foundation
 
-typealias CL = CollectionType
+public typealias CL = CollectionType
 
 public extension RiffleSession {
 	public func register(pdid: String, _ fn: () -> ())  {
@@ -105,8 +105,12 @@ public extension RiffleSession {
 }
 
 	public func subscribe<A: CN>(pdid: String, _ fn: (A) -> ())  {
-	_subscribe(pdid, fn: cumin(fn))
-}
+        _subscribe(pdid, fn: cumin(fn))
+    }
+    
+    public func subscribe<A: CL where A.Generator.Element: CN>(pdid: String, _ fn: (A) -> ())  {
+        _subscribe(pdid, fn: cumin(fn))
+    }
 
 	public func subscribe<A: CN, B: CN>(pdid: String, _ fn: (A, B) -> ())  {
 	_subscribe(pdid, fn: cumin(fn))
@@ -155,6 +159,10 @@ public func cumin(fn: () -> ()) -> ([AnyObject]) -> () {
 
 public func cumin<A: CN>(fn: (A) -> ()) -> ([AnyObject]) -> () {
 	return { (a: [AnyObject]) in fn(A.self <- a[0]) }
+}
+
+public func cumin<A: CL where A.Generator.Element: CN>(fn: (A) -> ()) -> ([AnyObject]) -> () {
+    return { (a: [AnyObject]) in fn(A.self <- a[0]) }
 }
 
 public func cumin<A: CN, B: CN>(fn: (A, B) -> ()) -> ([AnyObject]) -> () {

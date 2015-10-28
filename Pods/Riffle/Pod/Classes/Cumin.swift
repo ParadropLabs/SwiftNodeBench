@@ -61,6 +61,10 @@ func convert<A: AnyObject, T: CollectionType where T.Generator.Element: Cuminica
         var ret: [T.Generator.Element] = []
         
         for e in x {
+            let converted = T.Generator.Element.self <- e
+            ret.append(converted)
+            
+            /*
             if let converted = CuminicableElement.convert(e) as? T.Generator.Element {
                 ret.append(converted)
             } else {
@@ -70,9 +74,15 @@ func convert<A: AnyObject, T: CollectionType where T.Generator.Element: Cuminica
                 // TODO: Print out or return some flavor of log here?
                 return nil
             }
+            */
         }
         
-        return ret as? T
+        if let cast = ret as? T {
+            return cast
+        }
+        
+        // Emergency time-- have to cover the OSX cases here
+        return unsafeBitCast(ret, T.self)
     }
     
     // Can cover arrays here, too
@@ -104,13 +114,14 @@ precedence 155
 
 func <- <T: CN> (t:T.Type, object: AnyObject) -> T {
     let a = convert(object, t)
-    
-    // This would be an exxcellent place to catch cumin errors
-    // Throwing is likely the easiest way to deal with them
-    
+//    print(a)
     return a!
 }
 
+func <- <T: CollectionType where T.Generator.Element: CN> (t:T.Type, object: AnyObject) -> T {
+    let a = convert(object, t)    
+    return a!
+}
 
 // MARK: Deprecated V1 Cumin
 /*

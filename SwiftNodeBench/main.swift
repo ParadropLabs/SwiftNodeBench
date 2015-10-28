@@ -27,19 +27,15 @@ class Session: RiffleSession {
     }
     
     
-    // MARK: Basic Messaging Patterns
-    func sub(phrase: String) {
-        print("Recieved sub: \(phrase)")
-    }
-    
-    
     // MARK: Receivers
     func receiveTypes(a: Int, b: Float, c: Double, d: String, e: Bool) {
-        print("Receiving all kinds of stuff: ", a, b, c, d, e)
+        print("Receiving single types: ", a, b, c, d, e)
     }
     
-    func recieveCollections(a: [Int], b: [Float], c: [Double], d: [String], e: [Bool]) {
-        print("Receiving all kinds of stuff: ", a, b, c, d, e)
+    func recieveCollections(a: [Int]) {
+//        func recieveCollections(a: [Int], b: [Float], c: [Double], d: [String], e: [Bool]) {
+//        print("Receiving all kinds of stuff: ", a, b, c, d, e)
+        print("Receiving collection: ", a)
     }
 
     
