@@ -14,14 +14,29 @@ print("Hello, World!")
 
 class Session: RiffleSession {
     
+    var timer: NSTimer?
+    var counter = 0
+    
     override func onJoin() {
         print("Session joined")
 
-        self.subscribe("xs.demo.swiftbench/pub", sub)
+        timer = NSTimer.scheduledTimerWithTimeInterval(1.0 , target: self, selector: "scheduledPub", userInfo: nil, repeats: true)
+        
+//        self.subscribe("xs.demo.swiftbench/pub", subNumber)
     }
     
     func sub(phrase: String) {
         print("Recieved sub: \(phrase)")
+    }
+    
+    func subNumber(phrase: Int) {
+        print("Recieved sub: \(phrase)")
+    }
+    
+    func scheduledPub() {
+        print("Publishing round: ", counter)
+        self.publish("xs.demo.swiftbench/tick", counter)
+        counter += 1
     }
 }
 

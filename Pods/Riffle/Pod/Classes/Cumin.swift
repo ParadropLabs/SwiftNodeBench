@@ -28,7 +28,30 @@ import Mantle
 
 func convert<A: AnyObject, T: Cuminicable>(a: A?, _ t: T.Type) -> T? {
     if let x = a {
-        return t.convert(x) as? T
+        let ret = t.convert(x)
+        
+        // If nothing was returned then no possible conversion was possible
+        guard let castResult = ret else { return nil }
+        
+        if let finalResult = castResult as? T {
+            return finalResult
+        }
+        
+        // Catch errors for OSX issues
+        print("Cast result: ", castResult)
+        print("Expected type: ", t.dynamicType)
+        print("Dynamic Type: ", castResult.dynamicType)
+        print("Dynamic types match: \(T.self)" == "\(castResult.dynamicType)")
+        
+//        print("Size of result type: ", sizeof(boo))
+        print("Size of expected type: ", sizeof(T.self))
+        
+        // Catch the OSX error-- the types have different pointers since the swift lib is imported twice
+        if "\(T.self)" == "\(castResult.dynamicType)" {
+            let gamma = unsafeBitCast(ret, t)
+            return gamma
+        }
+        return ret as! T
     }
     
     return nil
@@ -41,7 +64,6 @@ func convert<A: AnyObject, T: CollectionType where T.Generator.Element: Cuminica
     // The expected sequence element type
     // Not implemented: recursive handling of nested data structures
     let CuminicableElement = T.Generator.Element.self
-    print(CuminicableElement)
     
     // Attempt to process the incoming parameters as an array
     if let x = a as? NSArray {
@@ -91,8 +113,11 @@ precedence 155
 
 func <- <T: CN> (t:T.Type, object: AnyObject) -> T {
     let a = convert(object, t)
+    
     // This would be an exxcellent place to catch cumin errors
     // Throwing is likely the easiest way to deal with them
+    
+    print(a)
     
     return a!
 }

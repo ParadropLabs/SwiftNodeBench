@@ -31,7 +31,10 @@ extension Int: Cuminicable {
 
 extension String: Cuminicable {
     public static func convert(object: AnyObject) -> Cuminicable? {
+//        print("Dyanmic type of object as it comes into the receiver", object.dynamicType)
+        
         if let x = object as? String {
+//            print("String converter, returning: ", x.dynamicType)
             return x
         }
         
