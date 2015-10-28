@@ -21,7 +21,7 @@ class Session: RiffleSession {
         print("Session joined")
         timer = NSTimer.scheduledTimerWithTimeInterval(1.0 , target: self, selector: "scheduledPub", userInfo: nil, repeats: true)
         
-        //self.subscribe("xs.demo.swiftbench/pub", subNumber)
+        self.subscribe("xs.demo.swiftbench/pub", subNumber)
     }
     
     func sub(phrase: String) {

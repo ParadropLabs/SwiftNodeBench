@@ -37,6 +37,16 @@ func convert<A: AnyObject, T: Cuminicable>(a: A?, _ t: T.Type) -> T? {
             return finalResult
         }
         
+        // Catch the OSX error as a last resort: on OSX the type pointers point to different things because of 
+        // "embedded swift code..." and the library being imported twice
+        // If we've gotten here the normal things aren't going to work 
+        if let bibble = t.brutalize(castResult) {
+            print("Hibblebibble")
+            return bibble as? T
+        }
+        
+        
+        
         // Catch errors for OSX issues
         print("Cast result: ", castResult)
         print("Expected type: ", t.dynamicType)
@@ -51,7 +61,8 @@ func convert<A: AnyObject, T: Cuminicable>(a: A?, _ t: T.Type) -> T? {
             let gamma = unsafeBitCast(ret, t)
             return gamma
         }
-        return ret as! T
+        
+//        return ret as! T
     }
     
     return nil

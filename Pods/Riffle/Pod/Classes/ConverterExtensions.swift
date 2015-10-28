@@ -11,6 +11,10 @@ import Foundation
 
 public protocol Cuminicable {
     static func convert(object: AnyObject) -> Cuminicable?
+    
+    // Assume the object passed in is of the same type as this object
+    // Apply an unsafebitcast to the object to make it play nicely with the return types
+    static func brutalize(object: Cuminicable) -> Cuminicable?
 }
 
 public typealias CN = Cuminicable
@@ -23,6 +27,14 @@ extension Int: Cuminicable {
         
         if let x = object as? String {
             return Int(x)
+        }
+        
+        return nil
+    }
+    
+    public static func brutalize(object: Cuminicable) -> Cuminicable? {
+        if let x = object as? Int {
+            return unsafeBitCast(x, Int.self)
         }
         
         return nil
@@ -44,6 +56,10 @@ extension String: Cuminicable {
         
         return nil
     }
+    
+    public static func brutalize(object: Cuminicable) -> Cuminicable? {
+        return nil
+    }
 }
 
 extension Double: Cuminicable {
@@ -56,6 +72,10 @@ extension Double: Cuminicable {
             return Double(x)
         }
         
+        return nil
+    }
+    
+    public static func brutalize(object: Cuminicable) -> Cuminicable? {
         return nil
     }
 }
@@ -72,6 +92,10 @@ extension Float: Cuminicable {
         
         return nil
     }
+    
+    public static func brutalize(object: Cuminicable) -> Cuminicable? {
+        return nil
+    }
 }
 
 extension Bool: Cuminicable {
@@ -84,6 +108,10 @@ extension Bool: Cuminicable {
             return Bool(x)
         }
         
+        return nil
+    }
+    
+    public static func brutalize(object: Cuminicable) -> Cuminicable? {
         return nil
     }
 }

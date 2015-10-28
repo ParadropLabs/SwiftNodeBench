@@ -40,6 +40,10 @@ public class RiffleModel : MTLModel, MTLJSONSerializing, Cuminicable {
         return nil
     }
     
+    public static func brutalize(object: Cuminicable) -> Cuminicable? {
+        return nil
+    }
+    
     //MARK: Old Placeholder Methods
     //    required override public init() {
     //        super.init()
