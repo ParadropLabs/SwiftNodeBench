@@ -18,6 +18,7 @@ public protocol Cuminicable {
 }
 
 public typealias CN = Cuminicable
+public typealias CL = CollectionType
 
 // Attempting to make a catch all method for the brutal casts
 func _brutalize<A, T: Cuminicable>(object: Cuminicable, _ expected: A.Type, _ t: T.Type) -> Cuminicable? {
