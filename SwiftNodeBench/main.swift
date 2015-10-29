@@ -9,7 +9,18 @@
 import Foundation
 import Riffle
 
-print("Hello, World!")
+func safeEnvVar(key: String) -> String? {
+    if let result = NSProcessInfo.processInfo().environment[key] {
+        return result
+    }
+    
+    print("WARN: unable to extract environment variable \(key)!")
+    return nil
+}
+
+//let key = safeEnvVar("EXIS_KEY")!
+let domain = safeEnvVar("DOMAIN")!
+let url = safeEnvVar("WS_URL")!
 
 
 class Session: RiffleSession {
@@ -19,7 +30,6 @@ class Session: RiffleSession {
     
     override func onJoin() {
         print("Session joined")
-
         timer = NSTimer.scheduledTimerWithTimeInterval(1.0 , target: self, selector: "scheduledPub", userInfo: nil, repeats: true)
         
 //        self.subscribe("xs.demo.swiftbench/pub", subNumber)
@@ -35,11 +45,11 @@ class Session: RiffleSession {
     
     func scheduledPub() {
         print("Publishing round: ", counter)
-        self.publish("xs.demo.swiftbench/tick", counter)
+        self.publish("domain/tick", counter)
         counter += 1
     }
 }
 
-setFabric("ws://ubuntu@ec2-52-26-83-61.us-west-2.compute.amazonaws.com:8000/ws")
-Session(domain: "xs.demo.swiftbench").connect()
+setFabric(url)
+Session(domain: domain).connect()
 NSRunLoop.currentRunLoop().run()

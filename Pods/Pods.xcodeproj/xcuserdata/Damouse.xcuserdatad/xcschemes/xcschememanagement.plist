@@ -29,11 +29,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Riffle-Riffle.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Riffle.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -47,42 +42,37 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>42F00C7EB9466A90CA8BDB51C0B158E3</key>
+		<key>11312917E634C03D2FCFB83433D92169</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4DE85B6DFB9DF6EFBEABC688F6292A24</key>
+		<key>1F0421168DE49F0F71F98ADF325544C4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A85179B43AB2984A58E8F02702265C40</key>
+		<key>23E2AB49509DACD14F42E9EE2B7F6EC5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>AE255B65FD4128F83AA608995F3F54E7</key>
+		<key>2D07224B75B24A7CF2333D2BB94FC180</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B1D17BA74BEACBD28F897F231B5907A4</key>
+		<key>968FAF12AA7D7EEB78A355BE75A9DAFE</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BBDD1B67905A61F2C14F31D3C828292E</key>
+		<key>B7BFCD041E04CAE6CF3351DDC52D4EFC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DE479E4186454105FB6CA9FAEA62AF0D</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>ED083685040CD45839374FBB41EFB303</key>
+		<key>C806BC109D291B406D3B8699000269F5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
