@@ -36,6 +36,7 @@ class Session: RiffleSession {
     
     override func onJoin() {
         print("Session joined")
+        
 //        timer = NSTimer.scheduledTimerWithTimeInterval(1.0 , target: self, selector: "scheduledPub", userInfo: nil, repeats: true)
         
         self.subscribe("\(domain)/start", start)
