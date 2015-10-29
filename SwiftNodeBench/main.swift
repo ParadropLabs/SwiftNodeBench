@@ -6,43 +6,43 @@
 //  Copyright © 2015 paradrop. All rights reserved.
 //
 
+import Darwin
 import Foundation
 import Riffle
 
-func safeEnvVar(key: String) -> String? {
+
+
+func safeEnvVar(key: String, _ normal: String) -> String {
     if let result = NSProcessInfo.processInfo().environment[key] {
         return result
+    } else {
+        print("WARN: unable to extract environment variable \(key)! Using \(normal) instead")
+        return normal
     }
-    
-    print("WARN: unable to extract environment variable \(key)!")
-    return nil
 }
 
-let key = safeEnvVar("EXIS_KEY")!
-let domain = safeEnvVar("DOMAIN")!
-let url = safeEnvVar("WS_URL")!
+let key = safeEnvVar("EXIS_KEY", "nothing")
+let domain = safeEnvVar("DOMAIN", "xs.demo.swiftbench")
+let url = safeEnvVar("WS_URL", "ws://ubuntu@ec2-52-26-83-61.us-west-2.compute.amazonaws.com:8000/ws")
 
-// let url = "ws://ubuntu@ec2-52-26-83-61.us-west-2.compute.amazonaws.com:8000/ws"
-// let domain = "xs.demo.swiftbench"
+
 
 class Session: RiffleSession {
     
     var timer: NSTimer?
     var counter = 0
     
+    var working = false
+    
     override func onJoin() {
         print("Session joined")
-        timer = NSTimer.scheduledTimerWithTimeInterval(1.0 , target: self, selector: "scheduledPub", userInfo: nil, repeats: true)
+//        timer = NSTimer.scheduledTimerWithTimeInterval(1.0 , target: self, selector: "scheduledPub", userInfo: nil, repeats: true)
         
-//        self.subscribe("xs.demo.swiftbench/pub", subNumber)
-    }
-    
-    func sub(phrase: String) {
-        print("Recieved sub: \(phrase)")
-    }
-    
-    func subNumber(phrase: Int) {
-        print("Recieved sub: \(phrase)")
+        self.subscribe("\(domain)/start", start)
+        self.subscribe("\(domain)/stop", stop)
+        
+        // Ping to indicate we've come up
+        self.publish("", domain)
     }
     
     func scheduledPub() {
@@ -50,8 +50,51 @@ class Session: RiffleSession {
         self.publish("\(domain)/tick", counter)
         counter += 1
     }
+    
+    
+    // MARK: Command and Control
+    func start(threads: Int, megabytes: Int) {
+        // Sets this containers usage
+        working = true
+        
+        cpu(threads)
+        memory(megabytes)
+    }
+    
+    func stop() {
+        working = false
+    }
+    
+    func cpu(threads: Int) {
+        for _ in 0...threads {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+                while self.working {
+                    for number in 1...10000 {
+                        if number % 2 != 0 && number % 3 != 0 && number % 4 != 0 && number % 5 != 0 && number % 6 != 0 && number % 7 != 0 && number % 9 != 0 {
+                            print("Prime: \(number)")
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func memory(megabytes: Int) {
+        var holder: [Double] = []
+        
+        for _ in 0...(megabytes * 50000) {
+            holder.append(DBL_MAX)
+        }
+        
+        while working {}
+    }
 }
+
 
 setFabric(url)
 Session(domain: domain).connect()
 NSRunLoop.currentRunLoop().run()
+
+
+
+
