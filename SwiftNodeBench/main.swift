@@ -18,10 +18,12 @@ func safeEnvVar(key: String) -> String? {
     return nil
 }
 
-//let key = safeEnvVar("EXIS_KEY")!
+let key = safeEnvVar("EXIS_KEY")!
 let domain = safeEnvVar("DOMAIN")!
 let url = safeEnvVar("WS_URL")!
 
+// let url = "ws://ubuntu@ec2-52-26-83-61.us-west-2.compute.amazonaws.com:8000/ws"
+// let domain = "xs.demo.swiftbench"
 
 class Session: RiffleSession {
     
@@ -45,7 +47,7 @@ class Session: RiffleSession {
     
     func scheduledPub() {
         print("Publishing round: ", counter)
-        self.publish("domain/tick", counter)
+        self.publish("\(domain)/tick", counter)
         counter += 1
     }
 }
