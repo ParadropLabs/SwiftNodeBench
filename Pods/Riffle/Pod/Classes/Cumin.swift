@@ -22,8 +22,6 @@ import Mantle
 func convert<A: AnyObject, T: Cuminicable>(a: A?, _ t: T.Type) -> T? {
     if let x = a {
         let ret = t.convert(x)
-        print(T.self)
-        print(a)
         
         // If nothing was returned then no possible conversion was possible
         guard let castResult = ret else { return nil }
@@ -109,7 +107,7 @@ precedence 155
 
 func <- <T: CN> (t:T.Type, object: AnyObject) -> T {
     let a = convert(object, t)
-    print(a)
+//    print(a)
     return a!
 }
 

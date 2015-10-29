@@ -24,6 +24,8 @@ class Session: RiffleSession {
         
         self.subscribe("xs.demo.swiftbench/types", receiveTypes)
         self.subscribe("xs.demo.swiftbench/collections", recieveCollections)
+        
+        self.register("xs.demo.swiftbench/callType", returnTypes)
     }
     
     
@@ -32,10 +34,18 @@ class Session: RiffleSession {
         print("Receiving single types: ", a, b, c, d, e)
     }
     
-//    func recieveCollections(a: [Int]) {
     func recieveCollections(a: [Int], b: [Float], c: [Double], d: [String], e: [Bool]) {
         print("Receiving all kinds of stuff: ", a, b, c, d, e)
-//        print("Receiving collection: ", a)
+    }
+    
+    func returnTypes() -> AnyObject {
+        print("Returning bunch of types")
+        return [1, "Hey!", true]
+    }
+    
+    // This DOES NOT WORK: all return types have to be AnyObject or nothing!
+    func returnCollections() -> (a: [Int], b: [Float], c: [Double], d: [String], e: [Bool])  {
+        return ([1, 2], [1.0, 2.0], [3.0, 4.0], ["Hey!", "There!"], [true, false])
     }
     
     

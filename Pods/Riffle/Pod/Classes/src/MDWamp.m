@@ -504,6 +504,9 @@
 #pragma mark MDWampInvocation
         MDWampInvocation *invocation = (MDWampInvocation *)message;
         
+        if (invocation.arguments == nil)
+            invocation.arguments = [NSArray array];
+        
         // Store association between this invocation.request to the generic registration
         [self.rpcPendingInvocation setObject:invocation.registration forKey:invocation.request];
         
@@ -772,7 +775,7 @@
     [self sendMessage:msg];
 }
 
-- (void)resultForInvocation:(MDWampInvocation*)invocation arguments:(NSArray*)arguments argumentsKw:(NSDictionary*)argumentsKw {
+- (void) resultForInvocation:(MDWampInvocation*)invocation arguments:(NSArray*)arguments argumentsKw:(NSDictionary*)argumentsKw {
     NSMutableDictionary *options = [[NSMutableDictionary alloc] init];
     
     // Handle progressive results
