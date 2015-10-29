@@ -42,7 +42,7 @@ class Session: RiffleSession {
         self.subscribe("\(domain)/stop", stop)
         
         // Ping to indicate we've come up
-        self.publish("", domain)
+        //self.publish("", domain)
     }
     
     func scheduledPub() {
@@ -82,8 +82,8 @@ class Session: RiffleSession {
     func memory(megabytes: Int) {
         var holder: [Double] = []
         
-        for _ in 0...(megabytes * 50000) {
-            holder.append(DBL_MAX)
+        for i in 0...(megabytes * 100000) {
+            holder.append(DBL_MAX - Double(i))
         }
         
         while working {}
