@@ -25,7 +25,13 @@ let key = safeEnvVar("EXIS_KEY", "nothing")
 let domain = safeEnvVar("DOMAIN", "xs.demo.swiftbench")
 let url = safeEnvVar("WS_URL", "ws://ubuntu@ec2-52-26-83-61.us-west-2.compute.amazonaws.com:8000/ws")
 
-
+func primes(n: Int) {
+    for number in 1...n {
+        if number % 2 != 0 && number % 3 != 0 && number % 4 != 0 && number % 5 != 0 && number % 6 != 0 && number % 7 != 0 && number % 9 != 0 {
+            print("Prime: \(number)")
+        }
+    }
+}
 
 class Session: RiffleSession {
     
@@ -41,8 +47,9 @@ class Session: RiffleSession {
         
         self.subscribe("\(domain)/start", start)
         self.subscribe("\(domain)/stop", stop)
+        self.register("\(domain)/calc", calc)
         
-        // Ping to indicate we've come up
+        // Ping to indicate we've come upb
         //self.publish("", domain)
     }
     
@@ -66,15 +73,16 @@ class Session: RiffleSession {
         working = false
     }
     
+    func calc(n: Int) -> AnyObject {
+        primes(n)
+        return true
+    }
+    
     func cpu(threads: Int) {
         for _ in 0...threads {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
                 while self.working {
-                    for number in 1...10000 {
-                        if number % 2 != 0 && number % 3 != 0 && number % 4 != 0 && number % 5 != 0 && number % 6 != 0 && number % 7 != 0 && number % 9 != 0 {
-                            print("Prime: \(number)")
-                        }
-                    }
+                    primes(10000)
                 }
             }
         }
